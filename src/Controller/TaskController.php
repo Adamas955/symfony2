@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\TaskEntity;
-use App\Form\TaskEntityType;
+use App\Form\TaskType;
 use App\Repository\TaskEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +29,7 @@ class TaskController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $task = new TaskEntity();
-        $form = $this->createForm(TaskEntityType::class, $task);
+        $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
@@ -50,7 +50,7 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
     public function edit(TaskEntity $task, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(TaskEntityType::class, $task);
+        $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 

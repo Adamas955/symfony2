@@ -16,16 +16,6 @@ class TaskType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('updateAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('author', EntityType::class, [
-                'class' => UserEntity::class,
-                'choice_label' => 'id',
-            ])
         ;
     }
 

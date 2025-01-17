@@ -19,14 +19,14 @@ class TaskEntity
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updateAt = null;
 
     #[ORM\ManyToOne(targetEntity: UserEntity::class, inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)] // nullable: false pour obliger la tâche à avoir un auteur
+    #[ORM\JoinColumn(nullable: true)] // nullable: false pour obliger la tâche à avoir un auteur
     private ?UserEntity $author = null;
 
     public function getId(): ?int
@@ -58,12 +58,20 @@ class TaskEntity
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    #[ORM\PrePersist]
+    public function setcreatedAtDefault(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTime();
+        }
+    }
+
+    public function getcreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setcreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
